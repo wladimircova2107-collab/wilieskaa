@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Wilieska 💖</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(180deg, #ffdae9 0%, #f3a6c5 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 85%;
+            z-index: 10;
+        }
+
+        h1 { color: #000; font-size: 32px; margin-bottom: 5px; font-weight: 900; }
+        .subtitle { color: #555; font-size: 18px; margin-bottom: 40px; }
+
+        .question-box {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            min-height: 60px;
+            align-items: center;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        #btnSi { 
+            background-color: #b34d9b; /* Color similar al de tu foto */
+            color: white;
+            box-shadow: 0 4px 15px rgba(179, 77, 155, 0.3);
+        }
+
+        #btnNo { 
+            background-color: #e0e0e0; 
+            color: #777; 
+            position: absolute;
+        }
+
+        .heart-particle {
+            position: absolute;
+            font-size: 25px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+
+        #mensajeFinal { 
+            display: none; 
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <h1>Hey Wilieska 💌</h1>
+        <p class="subtitle">Wladimir tiene una pregunta...</p>
+
+        <div id="contenidoInicial">
+            <div class="question-box">
+                ¿Quieres ser mi San Valentín?
+            </div>
+
+            <div class="buttons">
+                <button id="btnSi">síí ❤️‍🔥</button>
+                <button id="btnNo">No</button>
+            </div>
+        </div>
+
+        <div id="mensajeFinal">
+            <h2 style="color: #b34d9b; font-size: 40px; margin-bottom: 10px;">¡SÍÍ! 💖</h2>
+            <p style="color: #333; line-height: 1.6; font-size: 18px;">
+                te amo con todo lo que soy mami soy muy feliz contigo y todo lo que falta
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const btnSi = document.getElementById('btnSi');
+        const btnNo = document.getElementById('btnNo');
+        const contenidoInicial = document.getElementById('contenidoInicial');
+        const mensajeFinal = document.getElementById('mensajeFinal');
+
+        // Mover botón NO
+        const moverBotonNo = () => {
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
+            btnNo.style.left = `${x}px`;
+            btnNo.style.top = `${y}px`;
+        };
+
+        btnNo.addEventListener('mouseover', moverBotonNo);
+        btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); moverBotonNo(); });
+
+        // Acción al presionar SÍ
+        btnSi.addEventListener('click', () => {
+            contenidoInicial.style.display = 'none';
+            btnNo.style.display = 'none';
+            mensajeFinal.style.display = 'block';
+            
+            // Generar lluvia constante de corazones
+            setInterval(crearCorazon, 100);
+        });
+
+        function crearCorazon() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            const emojis = ['❤️', '💖', '💝', '💕', '🔥', '✨'];
+            heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            const duracion = (Math.random() * 2 + 2);
+            heart.style.animationDuration = duracion + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, duracion * 1000);
+        }
+    </script>
+</body>
+</html>
